@@ -6,7 +6,7 @@ import { env } from '../../config/env';
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.NODE_ENV === 'production',
-  sameSite: 'lax' as const,
+  sameSite: env.NODE_ENV === 'production' ? 'none' as const : 'lax' as const,
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   path: '/',
 };
@@ -88,7 +88,7 @@ export class AuthController {
       await authService.logout(req.user.userId);
 
       // Clear refresh token cookie
-      res.clearCookie('refreshToken', { path: '/' });
+      res.clearCookie('refreshToken', COOKIE_OPTIONS);
 
       sendSuccess(res, 'Logged out successfully.');
     } catch (error: any) {
