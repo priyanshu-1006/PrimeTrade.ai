@@ -39,7 +39,7 @@ export class SignalController {
 
   async findById(req: Request, res: Response, next: NextFunction) {
     try {
-      const signal = await signalService.findById(req.params.id);
+      const signal = await signalService.findById(req.params.id as string);
       sendSuccess(res, 'Signal retrieved successfully.', signal);
     } catch (error: any) {
       if (error.statusCode) {
@@ -52,7 +52,7 @@ export class SignalController {
 
   async update(req: Request, res: Response, next: NextFunction) {
     try {
-      const signal = await signalService.update(req.params.id, req.body);
+      const signal = await signalService.update(req.params.id as string, req.body);
       sendSuccess(res, 'Signal updated successfully.', signal);
     } catch (error: any) {
       if (error.statusCode) {
@@ -65,7 +65,7 @@ export class SignalController {
 
   async delete(req: Request, res: Response, next: NextFunction) {
     try {
-      const result = await signalService.delete(req.params.id);
+      const result = await signalService.delete(req.params.id as string);
       sendSuccess(res, result.message);
     } catch (error: any) {
       if (error.statusCode) {
